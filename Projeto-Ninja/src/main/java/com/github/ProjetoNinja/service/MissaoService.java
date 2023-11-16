@@ -3,6 +3,7 @@ package com.github.ProjetoNinja.service;
 import com.github.ProjetoNinja.model.Missao;
 import com.github.ProjetoNinja.repository.MissaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,26 +14,26 @@ public class MissaoService {
     @Autowired
     private MissaoRepository missaoRepository;
 
-    public Missao criarMissao(Missao missao) {
+    public Missao cadastarMissao(Missao missao) {
         return missaoRepository.save(missao);
     }
 
-    public Missao atualizarMissao(Long id, Missao novaMissao) {
-        if(missaoRepository.existsById(id)) {
-            novaMissao.setId(id);
-            return missaoRepository.save(novaMissao);
+    public ResponseEntity<Missao> atualizarMissao(long idDaMissao, Missao novaMissao) {
+        ResponseEntity<Missao> response;
+        if(missaoRepository.existsById(idDaMissao)) {
+            novaMissao.setIdDaMissao(idDaMissao);
+            response = ResponseEntity.ok(novaMissao);
+        } else {
+            response = ResponseEntity.notFound().build();
         }
-        return null;
+        return response;
     }
 
-    public Optional<Missao> pegarMissao(Long id) {
+    public Optional<Missao> retornarMissaoPorId(long id) {
         return missaoRepository.findById(id);
     }
-    public List<Missao> getTodasMissoes(){
+    public List<Missao> retornarTodasMissoes(){
         return missaoRepository.findAll();
     }
-
-
-
 
 }

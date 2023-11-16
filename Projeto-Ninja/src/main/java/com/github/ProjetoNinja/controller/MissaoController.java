@@ -8,20 +8,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/missoes")
+@RequestMapping ("/api/missoes")
 public class MissaoController {
     @Autowired
     private MissaoService missaoService;
 
     @GetMapping
-    public List<Missao> getAllMissoes() {
-        return missaoService.getTodasMissoes();
+    public List<Missao> retornarTodasMissoes() {
+        return missaoService.retornarTodasMissoes();
     }
 
-    @PostMapping("add")
-    public Missao postMissao(@RequestParam(value = "missao", defaultValue = "missao default") String missao, @RequestParam(value = "feita", defaultValue = "naoFeita") boolean done) {
-        Missao novaMissao = new Missao();
-        novaMissao.s
+    @PostMapping("/add")
+    public Missao postMissao(@RequestBody Missao missao) {
+        return missaoService.cadastarMissao(missao);
     }
 
 }

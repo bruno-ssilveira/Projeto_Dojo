@@ -17,11 +17,14 @@ import org.springframework.lang.NonNull;
 public class Missao {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long idDaMissao;
    @NonNull
     private String dificuldade;
    @NonNull
     private String tipoDaMissao;
    @NonNull
     private boolean concluida;
+   @OneToOne
+   @JoinColumn(name = "idDoNinja")
+   private Ninja ninjaResponsavel;
 }
